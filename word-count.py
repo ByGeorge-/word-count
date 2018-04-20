@@ -3,9 +3,18 @@ import json
 
 def word_counter(text):
 	if text.endswith(".json"):
-		words = open_json(text)
+		lines = open_json(text)
+		words = [word for word in lines.split()]
+
 	elif text.endswith(".txt"):
-		words = open_file(text)
+		lines = open_file(text)
+		words = [word for word in lines.split()]
+
+	# if text is a file I/O object, e.g. with open("text.txt") as f: / wc.word_counter(f) / >>> 420 words in document 
+	elif type(text) == "_io.TextIOWrapper": 
+		lines = [line for line in list(text)]
+		words = [word for word in lines.split()]
+		
 	else:
 		words = [word for word in text.split()]
 		
